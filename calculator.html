@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Calculator</title>
+    <link rel="stylesheet" href="style.css">  
+    <script src="calculator.js"></script>
+    
+</head>
+<body>
+   <h1>A <mark style="background-color: white;color: aqua;">Calc</mark>ulator!</h1>
+    <div class="calculator">
+        <input type="text" id="result" value="" readonly> <br>
+        
+        <input type="button" value="5" onclick="addToResult('5')">
+        <input type="button" value="3" onclick="addToResult('3')">
+        <input type="button" value="8" onclick="addToResult('8')">
+        <input type="button" value="*" onclick="addToResult('*')">
+        <input type="button" value="+" onclick="addToResult('+')"><br>
+        
+        <input type="button" value="4" onclick="addToResult('4')">
+        <input type="button" value="7" onclick="addToResult('7')">
+        <input type="button" value="2" onclick="addToResult('2')">
+        <input type="button" value="/" onclick="addToResult('/')"><br>
+        <input type="button" value="1" onclick="addToResult('1')">
+        <input type="button" value="6" onclick="addToResult('6')">
+        <input type="button" value="9" onclick="addToResult('9')">
+        <input type="button" value="-" onclick="addToResult('-')"><br>
+        <input type="button" value="0" onclick="addToResult('0')">
+
+        <input type="button"style="font-size:0.7em;font-weight:500;" value="DEL" onclick="deleteLastCharacter() ">
+        <input type="button" value="%" onclick="addToResult('%')">
+        <input type="button" value="=" onclick="calculate()"><br>
+        <input type="button" value="." onclick="addToResult('.')">
+        <!-- Splitting the button into two halves -->
+        <button class="bracket-button" onclick="insertBracket(event)">
+            <span class="bracket-left">(</span>
+            <span class="bracket-right">)</span>
+        </button>
+        <!-- Rest of the buttons -->
+        <input type="button" value="C" onclick="clearResult()"><br>
+       
+    </div>
+
+    <script>
+        let display = document.getElementById("result");
+
+        function addToResult(value) {
+            display.value += value;
+        }
+
+        function calculate() {
+            try {
+                display.value +="=" + eval(display.value);
+            } catch (error) {
+                display.value = "Error";
+            }
+        }
+
+        function clearResult() {
+            display.value = "";
+        }
+        function deleteLastCharacter() {
+    display.value = display.value.slice(0, -1);
+}
+
+        function insertBracket(event) {
+            // Get the position of the click relative to the button
+            let rect = event.target.getBoundingClientRect();
+            let clickX = event.clientX - rect.left;
+            // Determine which side of the button was clicked based on the click position
+            if (clickX < rect.width / 2) {
+                // Left side clicked, insert open bracket
+                display.value += '(';
+            } else {
+                // Right side clicked, insert closed bracket
+                display.value += ')';
+            }
+        }
+    </script>
+</body>
+</html>
